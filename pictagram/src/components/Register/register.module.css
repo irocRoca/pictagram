@@ -1,0 +1,44 @@
+.container {
+  max-width: 100%;
+  background: #fafafa;
+  padding: 40px;
+  margin-top: 10%;
+}
+
+@media (min-width: 450px) {
+  .container {
+    width: 350px;
+    background: white;
+    box-shadow: 4px 4px 8px 0px rgba(207, 207, 207, 1);
+    padding: 20px;
+    margin: 50px auto 0;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 30px;
+  padding: 15px;
+  font-family: "Lobster";
+  font-weight: 500;
+  margin: 15px;
+}
+
+.details {
+  font-size: 13px;
+  text-align: center;
+  color: rgb(142, 142, 142);
+  font-weight: 600;
+  margin: 0 40px 20px;
+}
+
+.row {
+  display: flex;
+  flex-direction: column;
+}
+
+.btncontain {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
