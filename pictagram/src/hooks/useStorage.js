@@ -14,7 +14,7 @@ const useStorage = (file) => {
       "state_changed",
       (snapshot) => {
         let percentage =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          Math.floor(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
         console.log(percentage);
         setProgress(percentage);
       },

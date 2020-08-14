@@ -18,5 +18,6 @@ firebase.initializeApp(firebaseConfig);
 const fbStorage = firebase.storage();
 const db = firebase.firestore();
 const auth = firebase.auth();
+const timeStamp = firebase.firestore.FieldValue.serverTimestamp;
 
-export { db, fbStorage, auth };
+export { db, fbStorage, auth, timeStamp };

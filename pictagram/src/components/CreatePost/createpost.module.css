@@ -1,0 +1,20 @@
+.heading {
+  color: red;
+  text-align: center;
+  font-weight: 500;
+  font-family: "Lobster";
+  word-spacing: 0.6px;
+  font-size: 25px;
+  margin: 0;
+  margin-bottom: 20px;
+}
+
+.caption {
+  margin-bottom: 10px !important;
+}
+
+.text_contain {
+  display: flex;
+  flex-direction: column;
+  margin: 10px;
+}

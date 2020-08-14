@@ -38,7 +38,7 @@ const CreatePostButton = () => {
         </Fab>
       )}
       <Modal open={open} onClose={handleClose}>
-        <CreatePost />
+        <CreatePost onClose={handleClose} />
       </Modal>
     </>
   );

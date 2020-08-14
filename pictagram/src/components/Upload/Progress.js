@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
-import useStroage from "../../hooks/useStorage";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-const ProgressBar = ({ file, setFile, setComplete, setuploadurl }) => {
-  const { progress, url, errors } = useStroage(file);
+const ProgressBar = ({ progress, setProgress }) => {
   useEffect(() => {
-    console.log(url);
-    if (url) {
-      setuploadurl(url);
-      setFile(null);
-      setComplete(false);
+    if (progress === 100) {
+      setProgress(0);
     }
-  }, [url, setFile]);
+  }, [progress]);
 
-  return <CircularProgress variant="static" value={progress} />;
+  return (
+    <CircularProgress
+      variant="static"
+      value={progress}
+      style={{ color: "white", height: "30px", width: "30px" }}
+    />
+  );
 };
 
 export default ProgressBar;

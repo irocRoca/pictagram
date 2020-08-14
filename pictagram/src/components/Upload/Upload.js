@@ -1,59 +1,51 @@
 import React, { useState } from "react";
-import Progress from "./Progress";
 import styles from "./upload.module.css";
-import TextField from "@material-ui/core/TextField";
-import { db } from "../../config/firebase";
 
-const Upload = ({ setImageurl }) => {
-  const [file, setFile] = useState(null);
-  const [tempFile, setTempFile] = useState(null);
-  const [complete, setComplete] = useState(false);
-  const [caption, setCaption] = useState("");
-  const [uploadurl, setuploadurl] = useState("");
+const Upload = ({ setFile, setImageDim, setError }) => {
+  const [tempUrl, setTempUrl] = useState("");
 
   const handleChange = (e) => {
+    setError(null);
     const file = e.target.files[0];
     if (file) {
       if (file.type === "image/png" || file.type === "image/jpeg") {
         const url = URL.createObjectURL(file);
-        setImageurl(url);
-        setTempFile(file);
+        setTempUrl(url);
+
+        getImage(url).then((value) => {
+          setImageDim(value);
+          setFile(file);
+        });
       } else {
-        console.log("Invalid file type");
+        // Alert user wrong file
+        setError("Invalid file type");
       }
     } else {
-      setImageurl(null);
+      // reset file if forum cancelled
+      setTempUrl(null);
     }
   };
 
-  const handleCaption = (e) => {
-    setCaption(e.target.value);
+  const getImage = (data) => {
+    return new Promise((resolve, reject) => {
+      let img = new Image();
+      img.src = data;
+      img.onload = () => resolve(Math.floor((img.height / img.width) * 100));
+      img.onerror = () => reject;
+    });
   };
 
-  const handleFile = () => {
-    setComplete(true);
-    setFile(tempFile);
-
-    // take the url from the return value of the upload
-    // submit url and caption to db
-    db.collection("posts")
-      .add({
-        caption,
-        photoUrl: uploadurl,
-      })
-      .then((ref) => {
-        console.log(ref);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  // Rendering to much
   return (
-    <>
-      <label htmlFor="file" className={styles.label}>
-        Upload
-      </label>
+    <div className={styles.containUpload}>
+      {tempUrl ? (
+        <div className={styles.image_contain}>
+          <img src={tempUrl} className={styles.image} alt="user photo" />
+        </div>
+      ) : (
+        <div className={styles.image_placeholder} />
+      )}
+      <label htmlFor="file" className={styles.label} />
       <input
         name="file"
         id="file"
@@ -61,24 +53,7 @@ const Upload = ({ setImageurl }) => {
         onChange={handleChange}
         className={styles.input}
       />
-      {complete && (
-        <Progress
-          file={file}
-          setFile={setFile}
-          setComplete={setComplete}
-          setuploadurl={setuploadurl}
-        />
-      )}
-      <TextField
-        label="Caption"
-        type="text"
-        fullWidth={true}
-        value={caption}
-        onChange={handleCaption}
-      />
-
-      <button onClick={handleFile}>Sumbit</button>
-    </>
+    </div>
   );
 };
 

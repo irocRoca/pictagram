@@ -1,0 +1,11 @@
+.comment {
+  margin: 0;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.caption_username {
+  font-weight: 600;
+  font-size: 14px;
+  margin-right: 3px;
+}
