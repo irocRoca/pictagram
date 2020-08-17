@@ -1,0 +1,55 @@
+.sidebar {
+  position: sticky;
+  top: 76px;
+  height: 500px;
+  margin-left: 30px;
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 0.4;
+  display: none;
+}
+
+.header {
+  display: flex;
+}
+
+.header_contain {
+  margin-left: 30px;
+}
+
+.avatar {
+  width: 66px !important;
+  height: 66px !important;
+}
+.username {
+  margin: 0;
+}
+
+.bio {
+  margin: 0;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.suggestions {
+  margin-top: 20px;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: "Montserrat";
+  color: #8e8e8e;
+}
+
+.footer {
+  color: #c7c7c7;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+@media (min-width: 1100px) {
+  .sidebar {
+    display: block !important;
+    max-width: 400px;
+  }
+}

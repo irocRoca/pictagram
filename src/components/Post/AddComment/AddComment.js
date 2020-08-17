@@ -11,13 +11,14 @@ const AddComment = ({ postId }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (comment != "") {
+    if (comment !== "") {
       db.collection("posts")
         .doc(postId)
         .collection("comments")
         .add({
           username: userData.user.displayName,
           comment,
+          userid: userData.user.uid,
           createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         })
         .then(() => {

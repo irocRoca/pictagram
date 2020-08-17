@@ -4,6 +4,8 @@ import "./app.module.css";
 import Header from "./components/Header/Header";
 import Register from "./components/Register/Register";
 import Signin from "./components/Signin/Signin";
+import Profile from "./components/Profile/Profile";
+import Account from "./components/Account/Account";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import rootReducer from "./reducers";
@@ -22,9 +24,11 @@ const App = () => {
         {/* create an component to just store user data */}
         <Header />
         <Switch>
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Signin} />
-          <Route path="/">
+          <Route path="/register" component={Register} exact />
+          <Route path="/profile/edit/:id" component={Account} exact />
+          <Route path="/profile/:id" component={Profile} exact />
+          <Route path="/login" component={Signin} exact />
+          <Route path="/" exact>
             <GridLayout />
           </Route>
         </Switch>

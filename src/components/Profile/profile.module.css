@@ -1,0 +1,81 @@
+.header {
+  display: flex;
+  margin: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.section {
+  margin-left: 10%;
+}
+
+.btn {
+  border: 1px solid #dbdbdb;
+  background: none;
+  padding: 5px 9px;
+  margin-left: 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn:hover {
+  color: #f50057;
+}
+
+.username {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.bio {
+  margin-top: 20px;
+  font-size: 15px;
+}
+
+.divider {
+  width: 100%;
+  border-top: 1px solid #dbdbdb;
+  margin: 40px 0;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(123px, 300px));
+}
+
+@media (min-width: 650px) {
+  .grid {
+    grid-gap: 10px;
+  }
+
+  .username {
+    font-size: 24px;
+  }
+
+  .bio {
+    font-size: 18px;
+  }
+}
+
+.contain {
+  position: relative;
+  margin-right: 3px;
+}
+
+.contain:last-child {
+  margin-right: 0;
+}
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}

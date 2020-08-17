@@ -5,9 +5,9 @@ import CreatePostButton from "../../components/CreatePost/CreatePostButton.js/Cr
 import Container from "../../components/Container/Container";
 import { useSelector, useDispatch } from "react-redux";
 import { auth, db } from "../../config/firebase";
+import Siderbar from "../../components/Siderbar/Siderbar";
 
 const GridLayout = () => {
-  const [open, setOpen] = useState(false);
   const userData = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const [post, setPost] = useState([]);
@@ -23,7 +23,7 @@ const GridLayout = () => {
     return () => {
       unsubscribe();
     };
-  }, [userData]);
+  }, [userData, dispatch]);
 
   useEffect(() => {
     let unsub = db
@@ -44,7 +44,7 @@ const GridLayout = () => {
       <Container>
         {userData.login && userData.uid}
         <div className={styles.grid}>
-          <div>
+          <main className={styles.main}>
             {post.map((item) => (
               <Post
                 username={item.username}
@@ -55,8 +55,8 @@ const GridLayout = () => {
                 dim={item.dim}
               />
             ))}
-          </div>
-          <div>Random Infomraiton</div>
+          </main>
+          <Siderbar user={userData.user} />
         </div>
         {userData.login && <CreatePostButton />}
       </Container>

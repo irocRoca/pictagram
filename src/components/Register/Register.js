@@ -31,6 +31,9 @@ const Register = (props) => {
     auth
       .createUserWithEmailAndPassword(state.email, state.password)
       .then((ref) => {
+        if (error) {
+          dispatchRedux({ type: "CLEAR_ERROR" });
+        }
         const user = auth.currentUser;
         console.log(user);
         user
@@ -61,6 +64,7 @@ const Register = (props) => {
             margin="dense"
             name="email"
             variant="outlined"
+            value={state.email}
             onChange={handleChange}
             autoComplete="off"
           />
@@ -71,6 +75,7 @@ const Register = (props) => {
             margin="dense"
             name="fullName"
             variant="outlined"
+            value={state.fullName}
             onChange={handleChange}
             autoComplete="off"
           />
@@ -81,6 +86,7 @@ const Register = (props) => {
             margin="dense"
             name="userName"
             variant="outlined"
+            value={state.userName}
             onChange={handleChange}
             autoComplete="off"
           />
@@ -92,6 +98,7 @@ const Register = (props) => {
             name="password"
             variant="outlined"
             type="password"
+            value={state.password}
             onChange={handleChange}
             autoComplete="off"
           />

@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect } from "react";
+import React, { useState } from "react";
 import styles from "./signin.module.css";
 import { auth } from "../../config/firebase";
 import TextField from "@material-ui/core/TextField";
@@ -6,39 +6,17 @@ import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "@material-ui/lab/Alert";
 
-const initalState = {
-  email: "",
-  password: "",
-};
-
-const reducer = (state, { field, value }) => {
-  return { ...state, [field]: value };
-};
-
 const Signin = (props) => {
-  const [state, dispatch] = useReducer(reducer, initalState);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
   const dispatchRedux = useDispatch();
   const error = useSelector((state) => state.errors.message);
-
-  // useEffect(() => {
-  //   const unsubscribe = auth.onAuthStateChanged((user) => {
-  //     if (user) {
-  //       console.log(user);
-  //     }
-  //   });
-  //   return () => {
-  //     unsubscribe();
-  //   };
-  // }, [auth]);
-
-  const handleChange = (e) => {
-    dispatch({ field: e.target.name, value: e.target.value });
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     auth
-      .signInWithEmailAndPassword(state.email, state.password)
+      .signInWithEmailAndPassword(email, password)
       .then((ref) => {
         if (error) {
           dispatchRedux({ type: "CLEAR_ERROR" });
@@ -47,6 +25,8 @@ const Signin = (props) => {
         // send userid also to db to store users
         // or store user in state
         // close the form or mover away from it
+        setEmail("");
+        setPassword("");
         console.log(ref.user.uid);
         props.history.push("/");
       })
@@ -68,7 +48,7 @@ const Signin = (props) => {
             name="email"
             variant="outlined"
             type="email"
-            onChange={handleChange}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className={styles.row}>
@@ -78,7 +58,7 @@ const Signin = (props) => {
             name="password"
             variant="outlined"
             type="password"
-            onChange={handleChange}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 

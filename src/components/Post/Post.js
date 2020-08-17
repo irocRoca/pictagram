@@ -25,7 +25,7 @@ const Post = ({ username, caption, id, photourl, dim }) => {
         );
       });
     return () => sub();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     let likeSub = db
@@ -41,26 +41,30 @@ const Post = ({ username, caption, id, photourl, dim }) => {
         setLikes(snap.size);
       });
     return () => likeSub();
-  }, []);
+  }, [id, userData.user.uid]);
 
   const handleDoubleClick = (e) => {
-    let likeRef = db.collection("posts").doc(id).collection("likes");
+    if (userData.user.login) {
+      let likeRef = db.collection("posts").doc(id).collection("likes");
 
-    likeRef
-      .where("id", "==", userData.user.uid)
-      .get()
-      .then((doc) => {
-        if (doc.size > 0) {
-          let docId = doc.docs[0].id;
-          likeRef.doc(docId).delete();
-          setActive(false);
-        } else {
-          likeRef.add({
-            username,
-            id: userData.user.uid,
-          });
-        }
-      });
+      likeRef
+        .where("id", "==", userData.user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.size > 0) {
+            let docId = doc.docs[0].id;
+            likeRef.doc(docId).delete();
+            setActive(false);
+          } else {
+            likeRef.add({
+              username,
+              id: userData.user.uid,
+            });
+          }
+        });
+    } else {
+      console.log("must sign in to like photo");
+    }
   };
 
   return (
@@ -81,6 +85,7 @@ const Post = ({ username, caption, id, photourl, dim }) => {
         {/* Make images clickable */}
         <div className={styles.icons}>
           <i
+            onClick={handleDoubleClick}
             className={`far fa-heart ${styles.heart} ${
               active && styles.active
             }`}

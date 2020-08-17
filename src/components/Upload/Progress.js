@@ -12,7 +12,7 @@ const ProgressBar = ({ progress, setProgress }) => {
     <CircularProgress
       variant="static"
       value={progress}
-      style={{ color: "white", height: "30px", width: "30px" }}
+      style={{ height: "40px", width: "40px" }}
     />
   );
 };

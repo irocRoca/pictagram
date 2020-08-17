@@ -34,7 +34,6 @@ const CreatePost = ({ onClose }) => {
           (snapshot) => {
             let percentage =
               Math.floor(snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(percentage);
             setProgress(percentage);
           },
           (err) => {
@@ -50,6 +49,7 @@ const CreatePost = ({ onClose }) => {
                     photourl: uploadedUrl,
                     caption,
                     dim: imageDim,
+                    userid: userData.user.uid,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                   })
                   .then(() => {
@@ -101,12 +101,15 @@ const CreatePost = ({ onClose }) => {
             onClick={handleSubmit}
             style={{ marginTop: "10px", height: "35px" }}
           >
-            {progress > 0 ? (
-              <Progress progress={progress} setProgress={setProgress} />
-            ) : (
-              "Submit"
-            )}
+            Submit
           </Button>
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {progress > 0 ? (
+            <Progress progress={progress} setProgress={setProgress} />
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </form>
