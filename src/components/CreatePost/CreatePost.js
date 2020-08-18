@@ -25,7 +25,7 @@ const CreatePost = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (caption != "") {
+    if (caption !== "") {
       if (file) {
         let storageRef = fbStorage.ref();
         let uploadTask = storageRef.child("images/" + file.name);

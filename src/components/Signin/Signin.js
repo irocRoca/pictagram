@@ -27,7 +27,7 @@ const Signin = (props) => {
         // close the form or mover away from it
         setEmail("");
         setPassword("");
-        console.log(ref.user.uid);
+        dispatchRedux({ type: "LOGIN", payload: ref.user });
         props.history.push("/");
       })
       .catch((err) => {

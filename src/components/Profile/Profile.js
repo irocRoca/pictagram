@@ -17,13 +17,11 @@ const Profile = (props) => {
       .then((snap) => {
         let info = [];
         snap.forEach((doc) => {
-          // setData([...data, { docid: doc.id, ...doc.data() }]);
           info.push({ docid: doc.id, ...doc.data() });
         });
         setData(info);
       });
   }, [id]);
-  console.log("this render");
 
   return (
     <Container>

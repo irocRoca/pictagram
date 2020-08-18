@@ -44,6 +44,7 @@ const Register = (props) => {
             dispatchRedux({ type: "ERROR", payload: err.message });
           });
         dispatchRedux({ type: "LOGIN", payload: user });
+        console.log(user);
         props.history.push("/");
       })
       .catch((err) => {
