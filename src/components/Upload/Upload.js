@@ -40,7 +40,7 @@ const Upload = ({ setFile, setImageDim, setError }) => {
     <div className={styles.containUpload}>
       {tempUrl ? (
         <div className={styles.image_contain}>
-          <img src={tempUrl} className={styles.image} alt="user photo" />
+          <img src={tempUrl} className={styles.image} alt="user" />
         </div>
       ) : (
         <div className={styles.image_placeholder} />

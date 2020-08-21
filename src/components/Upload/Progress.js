@@ -6,7 +6,7 @@ const ProgressBar = ({ progress, setProgress }) => {
     if (progress === 100) {
       setProgress(0);
     }
-  }, [progress]);
+  }, [progress, setProgress]);
 
   return (
     <CircularProgress

@@ -1,10 +1,11 @@
 import React, { useReducer } from "react";
 import styles from "./register.module.css";
-import { auth } from "../../config/firebase";
+import { auth, db } from "../../config/firebase";
 import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
+import { clearError, createError, loginAction } from '../../redux/actions'
 
 const initalState = {
   userName: "",
@@ -31,26 +32,24 @@ const Register = (props) => {
     auth
       .createUserWithEmailAndPassword(state.email, state.password)
       .then((ref) => {
-        if (error) {
-          dispatchRedux({ type: "CLEAR_ERROR" });
-        }
+        if (error) { dispatchRedux(clearError())};
         const user = auth.currentUser;
-        console.log(user);
-        user
-          .updateProfile({
-            displayName: state.userName,
-          })
-          .catch((err) => {
-            dispatchRedux({ type: "ERROR", payload: err.message });
-          });
-        dispatchRedux({ type: "LOGIN", payload: user });
-        console.log(user);
-        props.history.push("/");
-      })
-      .catch((err) => {
-        dispatchRedux({ type: "ERROR", payload: err.message });
-      });
-  };
+        user.updateProfile({
+          displayName: state.userName,
+        }).then(() => {
+          db
+              .collection("users")
+              .add({
+                username: state.userName,
+                email: state.email,
+                firstname: state.fullName.split(" ")[0],
+                lastname: state.fullName.split(" ")[1],
+              })
+              .catch(err => dispatchRedux(createError("Failed to create user")))
+        }).catch(err => createError("Failed to update Username"))
+        dispatchRedux(loginAction(user))
+      }).catch((err) => dispatchRedux(createError(err.message)));  
+    }
 
   return (
     <div className={styles.container}>

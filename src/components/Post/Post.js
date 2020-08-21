@@ -33,7 +33,7 @@ const Post = ({ username, caption, id, photourl, dim }) => {
       .doc(id)
       .collection("likes")
       .onSnapshot((snap) => {
-        snap.docs.map((doc) => {
+        snap.docs.forEach((doc) => {
           if (doc.data().id === userData.user.uid) {
             setActive(true);
           }
@@ -41,10 +41,10 @@ const Post = ({ username, caption, id, photourl, dim }) => {
         setLikes(snap.size);
       });
     return () => likeSub();
-  }, [id, userData.user.uid]);
+  }, [userData.user, id]);
 
   const handleDoubleClick = (e) => {
-    if (userData.user.login) {
+    if (userData.login) {
       let likeRef = db.collection("posts").doc(id).collection("likes");
 
       likeRef

@@ -32,30 +32,4 @@ const userReducer = (state = initalUser, action) => {
   }
 };
 
-const loginAction = (id) => {
-  return {
-    type: "LOGIN",
-    payload: id,
-  };
-};
-
-const logoutAction = () => {
-  return {
-    type: "LOGOUT",
-  };
-};
-
-const errorAction = (err) => {
-  return {
-    type: "ERROR",
-    payload: err,
-  };
-};
-
-const clearErrorAction = () => {
-  return {
-    type: "CLEAR_ERRORS",
-  };
-};
-
 export default combineReducers({ errors: errorsReducer, user: userReducer });

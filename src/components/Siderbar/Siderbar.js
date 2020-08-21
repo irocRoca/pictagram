@@ -9,7 +9,7 @@ const Siderbar = ({ user }) => {
         <Avatar className={styles.avatar} src={user && user.photoURL} />
         <div className={styles.header_contain}>
           <h3 className={styles.username}>
-            {!user ? user.displayName : "Username"}
+            {user.displayName ? user.displayName : "Username"}
           </h3>
           <p className={styles.bio}>
             Random information that would need to be pulled from database to

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import GridLayout from "./layout/Grid/Grid";
 import "./app.module.css";
 import Header from "./components/Header/Header";

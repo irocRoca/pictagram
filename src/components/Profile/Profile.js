@@ -10,6 +10,8 @@ const Profile = (props) => {
   let history = useHistory();
   const [data, setData] = useState([]);
 
+  // Find user in user collection based of id
+
   useEffect(() => {
     db.collection("posts")
       .where("userid", "==", id)
