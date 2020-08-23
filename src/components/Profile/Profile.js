@@ -4,11 +4,14 @@ import Container from "../Container/Container";
 import styles from "./profile.module.css";
 import { useParams, useHistory } from "react-router-dom";
 import { db } from "../../config/firebase";
+import { useSelector } from "react-redux";
 
 const Profile = (props) => {
   let { id } = useParams();
   let history = useHistory();
   const [data, setData] = useState([]);
+  const userData = useSelector((state) => state.user.user);
+  const [profileUser, setProfileUser] = useState({});
 
   // Find user in user collection based of id
 
@@ -25,6 +28,13 @@ const Profile = (props) => {
       });
   }, [id]);
 
+  useEffect(() => {
+    db.collection("users")
+      .doc(id)
+      .get()
+      .then((ref) => setProfileUser(ref.data()));
+  }, []);
+
   return (
     <Container>
       <header className={styles.header}>
@@ -32,17 +42,17 @@ const Profile = (props) => {
 
         <section className={styles.section}>
           <div>
-            <span className={styles.username}>Username</span>
-            <button
-              className={styles.btn}
-              onClick={() => history.push(`/profile/edit/${id}`)}
-            >
-              Edit Profile
-            </button>
+            <span className={styles.username}>{profileUser.username}</span>
+            {userData.uid === id && (
+              <button
+                className={styles.btn}
+                onClick={() => history.push(`/profile/edit/${id}`)}
+              >
+                Edit Profile
+              </button>
+            )}
           </div>
-          <div className={styles.bio}>
-            Random information about a random person that would be long.
-          </div>
+          <div className={styles.bio}>{profileUser.bio}</div>
         </section>
       </header>
       <div className={styles.divider}></div>

@@ -73,7 +73,7 @@ const CreatePost = ({ onClose }) => {
   };
 
   return (
-    <form>
+    <form style={{ padding: "30px" }}>
       <div>
         {error && <Alert severity="error">{error}</Alert>}
         <p className={styles.heading}>Upload an image!</p>

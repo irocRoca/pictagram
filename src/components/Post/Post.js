@@ -4,12 +4,15 @@ import styles from "./post.module.css";
 import { db } from "../../config/firebase";
 import AddComment from "./AddComment/AddComment";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import ExtendedPost from "./ExtendedPost/ExtendedPost";
 
-const Post = ({ username, caption, id, photourl, dim }) => {
+const Post = ({ username, caption, id, photourl, dim, userid }) => {
   const userData = useSelector((state) => state.user);
   const [likes, setLikes] = useState(0);
   const [comments, setComments] = useState([]);
   const [active, setActive] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     let sub = db
@@ -28,20 +31,23 @@ const Post = ({ username, caption, id, photourl, dim }) => {
   }, [id]);
 
   useEffect(() => {
-    let likeSub = db
-      .collection("posts")
-      .doc(id)
-      .collection("likes")
-      .onSnapshot((snap) => {
-        snap.docs.forEach((doc) => {
-          if (doc.data().id === userData.user.uid) {
-            setActive(true);
-          }
+    let likeSub;
+    if (userData) {
+      likeSub = db
+        .collection("posts")
+        .doc(id)
+        .collection("likes")
+        .onSnapshot((snap) => {
+          snap.docs.forEach((doc) => {
+            if (doc.data().id === userData.user.uid) {
+              setActive(true);
+            }
+          });
+          setLikes(snap.size);
         });
-        setLikes(snap.size);
-      });
+    }
     return () => likeSub();
-  }, [userData.user, id]);
+  }, [userData, id]);
 
   const handleDoubleClick = (e) => {
     if (userData.login) {
@@ -67,11 +73,17 @@ const Post = ({ username, caption, id, photourl, dim }) => {
     }
   };
 
+  const handleClick = () => {
+    setOpen(true);
+  };
+
   return (
     <section className={styles.post}>
       <div className={styles.header}>
         <div className={styles.avatar}>R</div>
-        <div className={styles.username}>{username}</div>
+        <div className={styles.username}>
+          <Link to={`/profile/${userid}`}>{username}</Link>
+        </div>
       </div>
       <div
         className={styles.image_container}
@@ -96,12 +108,14 @@ const Post = ({ username, caption, id, photourl, dim }) => {
         <div className={styles.likes}>{likes} Likes</div>
         {/* Make comment a component later*/}
         <p className={styles.caption}>
-          <span className={styles.caption_username}>{username}:</span>
+          <span className={styles.caption_username}>
+            <Link to={`/profile/${userid}`}>{username}</Link>:
+          </span>
           {caption}
         </p>
         {comments && comments.length > 5 ? (
           <>
-            <p className={styles.view_comment}>
+            <p className={styles.view_comment} onClick={handleClick}>
               View all {comments.length} comment
             </p>
             {comments
@@ -120,11 +134,13 @@ const Post = ({ username, caption, id, photourl, dim }) => {
               username={item.username}
               comment={item.comment}
               key={item.id}
+              userid={item.userid}
             />
           ))
         )}
         {userData.login && <AddComment postId={id} />}
       </div>
+      {open && <ExtendedPost setOpen={setOpen} open={open} postId={id} />}
     </section>
   );
 };

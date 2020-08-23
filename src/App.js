@@ -24,12 +24,7 @@ const App = () => {
           exact
           auth={user}
         />
-        <GuardedRoute
-          path="/profile/:id"
-          component={Profile}
-          exact
-          auth={user}
-        />
+        <Route path="/profile/:id" component={Profile} exact />
         <Route path="/register" component={Register} exact />
         <Route path="/login" component={Signin} exact />
         <Route path="/" exact component={GridLayout} />

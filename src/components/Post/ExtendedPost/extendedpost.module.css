@@ -1,0 +1,38 @@
+/* .header {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  height: 35px;
+  width: 35px;
+  background: lightgrey;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: 600;
+  font-size: 0.9rem;
+} */
+
+.image_container {
+  position: relative;
+}
+
+.image {
+  width: 100%;
+  object-fit: cover;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* .like {
+  background: red;
+} */

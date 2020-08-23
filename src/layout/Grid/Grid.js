@@ -53,6 +53,7 @@ const GridLayout = () => {
                 key={item.id}
                 id={item.id}
                 dim={item.dim}
+                userid={item.userid}
               />
             ))}
           </main>

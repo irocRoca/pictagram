@@ -5,7 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
-import { clearError, createError, loginAction } from '../../redux/actions'
+import { clearError, createError, loginAction } from "../../redux/actions";
 
 const initalState = {
   userName: "",
@@ -32,24 +32,34 @@ const Register = (props) => {
     auth
       .createUserWithEmailAndPassword(state.email, state.password)
       .then((ref) => {
-        if (error) { dispatchRedux(clearError())};
+        if (error) {
+          dispatchRedux(clearError());
+        }
         const user = auth.currentUser;
-        user.updateProfile({
-          displayName: state.userName,
-        }).then(() => {
-          db
-              .collection("users")
-              .add({
+        console.log(user);
+        user
+          .updateProfile({
+            displayName: state.userName,
+          })
+          .then(() => {
+            db.collection("users")
+              .doc(user.uid)
+              .set({
                 username: state.userName,
                 email: state.email,
                 firstname: state.fullName.split(" ")[0],
                 lastname: state.fullName.split(" ")[1],
+                bio: "Update your Bio",
               })
-              .catch(err => dispatchRedux(createError("Failed to create user")))
-        }).catch(err => createError("Failed to update Username"))
-        dispatchRedux(loginAction(user))
-      }).catch((err) => dispatchRedux(createError(err.message)));  
-    }
+              .catch((err) =>
+                dispatchRedux(createError("Failed to create user"))
+              );
+          })
+          .catch((err) => createError("Failed to update Username"));
+        dispatchRedux(loginAction(user));
+      })
+      .catch((err) => dispatchRedux(createError(err.message)));
+  };
 
   return (
     <div className={styles.container}>

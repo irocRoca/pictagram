@@ -3,6 +3,7 @@ import styles from "./siderbar.module.css";
 import Avatar from "@material-ui/core/Avatar";
 
 const Siderbar = ({ user }) => {
+  console.log(user);
   return (
     <section className={styles.sidebar}>
       <div className={styles.header}>

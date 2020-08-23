@@ -1,31 +1,67 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { Avatar } from "@material-ui/core";
-import Container from '../Container/Container';
+import { Avatar, Button } from "@material-ui/core";
+import styles from "./account.module.css";
 
 const Account = () => {
   return (
-    <div>
-      {/* maybe do a change password */}
-      {/* for the avatar that url will be stored in the user at redux user.user.photoUrl */}
-      <Container>
-      <Avatar />
-      <form>
-        <TextField label="username" />
-        <div>
-        <TextField label="First Name" />
-        <TextField label="Last Name" />
-        </div>
-        
-        <TextField label="password" />
-      </form>
-      </Container>
+    <div className={styles.container}>
+      {/* {error && <Alert severity="error">{error}</Alert>} */}
 
-      <div>image</div>
-      <div>First name</div>
-      <div>Last name</div>
-      <div>edit Bio</div>
-      <div>button to update</div>
+      <h3 className={styles.title}>
+        <Avatar />
+      </h3>
+      <form>
+        <div className={styles.row}>
+          <TextField
+            label="Username"
+            margin="dense"
+            name="username"
+            variant="outlined"
+            type="text"
+          />
+        </div>
+        <div className={styles.row}>
+          <TextField
+            label="First Name"
+            margin="dense"
+            name="firstname"
+            variant="outlined"
+            type="text"
+          />
+        </div>
+        <div className={styles.row}>
+          <TextField
+            label="Last Name"
+            margin="dense"
+            name="lastname"
+            variant="outlined"
+            type="text"
+          />
+        </div>
+        <div className={styles.row}>
+          <TextField
+            label="Bio"
+            margin="dense"
+            name="bio"
+            variant="outlined"
+            multiline
+            rows={4}
+            type="text"
+          />
+        </div>
+
+        <div className={styles.btncontain}>
+          <Button
+            variant="contained"
+            color="primary"
+            style={{ textAlign: "center" }}
+            type="submit"
+          >
+            Update
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
